@@ -1,6 +1,3 @@
-Here is a draft of the README file explaining how you are applying your DevOps skills using the car showroom front-end application:
-
----
 
 # Car Showroom Front-end Application
 
@@ -11,11 +8,11 @@ This repository contains the Car Showroom front-end application. As part of my a
 ## DevOps Skills Demonstration
 
 ### Containerization
-- The application is containerized using Docker. I have created a Dockerfile to build the application image and a Docker Compose file to run the application locally in a containerized environment.
+- The application is containerized using Docker. I have created a Dockerfile to build the application image  to run the application locally in a containerized environment.
 - The Docker image is pushed to Docker Hub for easy access and deployment.
 
 ### Continuous Integration/Continuous Deployment (CI/CD)
-- I have set up a CI/CD pipeline using Jenkins. The pipeline includes stages for building the Docker image, running tests, and deploying the application.
+- I have set up a CI/CD pipeline using Jenkins. The pipeline includes stages for building the Docker image, running tests, and deploying the application using ArgoCD.
 - The pipeline is triggered automatically on every commit to the repository, ensuring that the application is always in a deployable state.
 
 ### Deployment on Kubernetes using Argo CD
@@ -25,9 +22,8 @@ This repository contains the Car Showroom front-end application. As part of my a
 
 ## Repository Structure
 - `Dockerfile`: Defines the steps to build the Docker image for the application.
-- `docker-compose.yml`: Used to run the application locally in a containerized environment.
 - `Jenkinsfile`: Defines the CI/CD pipeline stages and steps.
-- `k8s/`: Contains Kubernetes manifests for deploying the application on a Kubernetes cluster using Argo CD.
+- `manifests/`: Contains Kubernetes manifests for deploying the application on a Kubernetes cluster using Argo CD.
 
 ## Steps to Run Locally
 1. **Clone the repository:**
@@ -36,9 +32,10 @@ This repository contains the Car Showroom front-end application. As part of my a
    cd car-showroom-frontend
    ```
 
-2. **Build and run the application using Docker Compose:**
+2. **Build and run the application**
    ```sh
-   docker-compose up -d
+   docker build -t carshowroom:1 .
+   docker run -p 3001:30001 carshowroom:1 
    ```
 
 ## CI/CD Pipeline
@@ -49,17 +46,13 @@ The CI/CD pipeline defined in the `Jenkinsfile` includes the following stages:
 4. **Deploy**: Deploys the application to the Kubernetes cluster using Argo CD.
 
 ## Deployment on Kubernetes
-1. **Install Argo CD:**
-   Follow the official [Argo CD installation guide](https://argo-cd.readthedocs.io/en/stable/getting_started/).
+For detailed steps on deploying the application using Argo CD, read my blog [here](https://sujith08.hashnode.dev/end-to-end-cicd-project-using-jenkins-and-argocd).
 
-2. **Deploy the application:**
-   ```sh
-   kubectl apply -f k8s/
-   ```
+## Additional Information
+For more details about the project and the CI/CD pipeline, please read my blog [here](https://sujith08.hashnode.dev/end-to-end-cicd-project-using-jenkins-and-argocd).
+
+
 
 ## Conclusion
 By utilizing the Car Showroom front-end application, I have demonstrated my ability to implement DevOps practices, including containerization, CI/CD pipelines, and Kubernetes deployment with Argo CD. This project showcases my skills in ensuring smooth deployment, scalability, and maintenance of applications and infrastructure.
 
----
-
-Feel free to modify or expand this README file as needed to better match your project specifics and personal style.
