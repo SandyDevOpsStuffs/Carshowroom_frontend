@@ -6,9 +6,9 @@ pipeline {
     }
 
     environment {
-        FRONTEND_REPO = 'https://github.com/Sujithsai08/carshowroom_frontend.git'
+        FRONTEND_REPO = 'https://github.com/Sujithsai08/tanxFI_Assignment.git'
         FRONTEND_BRANCH = 'main'
-        SONAR_URL = 'http://18.206.184.8:9000' // Replace this URL with your SonarQube server URL
+        SONAR_URL = 'http://54.160.218.215:9000' // Replace this URL with your SonarQube server URL
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
 
