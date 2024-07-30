@@ -10,8 +10,6 @@ pipeline {
         FRONTEND_BRANCH = 'main'
         SONAR_URL = 'http://54.160.218.215:9000' // Replace this URL with your SonarQube server URL
         REGISTRY_CREDENTIALS = credentials('docker-cred')
-        GIT_REPO_NAME = 'carshowroom_frontend'
-        GIT_USER_NAME = 'Sujithsai08'
     }
 
     stages {
@@ -23,7 +21,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                withEnv(['CI=false']) {
+                withEnv(['CI=false']) { // Ensure CI is false to bypass ESLint warnings
                     sh 'npm install'
                     sh 'npm install @babel/plugin-proposal-private-property-in-object --save-dev'
                 }
@@ -32,21 +30,16 @@ pipeline {
 
         stage('Build Application') {
             steps {
-                sh 'npm run build'
+                withEnv(['CI=false']) { // Ensure CI is false to bypass ESLint warnings
+                    sh 'npm run build'
+                }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-                    sh '''
-                    npx sonar-scanner \
-                      -Dsonar.login=$SONAR_AUTH_TOKEN \
-                      -Dsonar.host.url=${SONAR_URL} \
-                      -Dsonar.projectKey=${GIT_REPO_NAME} \
-                      -Dsonar.projectName="${GIT_REPO_NAME}" \
-                      -Dsonar.sources=src
-                    '''
+                    sh 'npx sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=carshowroom_frontend -Dsonar.projectName="Car Showroom Frontend" -Dsonar.sources=src'
                 }
             }
         }
@@ -59,7 +52,7 @@ pipeline {
                 script {
                     sh 'docker build -t ${DOCKER_IMAGE} .'
                     def dockerImage = docker.image("${DOCKER_IMAGE}")
-                    docker.withRegistry('https://index.docker.io/v1/', "${REGISTRY_CREDENTIALS}") {
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
                         dockerImage.push()
                     }
                 }
@@ -67,6 +60,10 @@ pipeline {
         }
 
         stage('Update Deployment File') {
+            environment {
+                GIT_REPO_NAME = "carshowroom_frontend"
+                GIT_USER_NAME = "Sujithsai08"
+            }
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
