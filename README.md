@@ -35,7 +35,7 @@ This repository contains the Car Showroom front-end application. As part of my a
 2. **Build and run the application**
    ```sh
    docker build -t carshowroom:1 .
-   docker run -p 3001:30001 carshowroom:1 
+   docker run -p 3001:3001 carshowroom:1 
    ```
 
 ## CI/CD Pipeline
