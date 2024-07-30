@@ -1,14 +1,14 @@
 pipeline {
     agent any
-    
+
     tools {
         nodejs 'NodeJS' // Ensure the name matches the NodeJS installation configured in Jenkins
     }
-    
+
     environment {
         FRONTEND_REPO = 'https://github.com/Sujithsai08/carshowroom_frontend.git'
         FRONTEND_BRANCH = 'main'
-       
+        SONAR_URL = 'http://18.206.184.8:9000' // Replace this URL with your SonarQube server URL
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
 
@@ -18,7 +18,7 @@ pipeline {
                 git url: "${env.FRONTEND_REPO}", branch: "${env.FRONTEND_BRANCH}"
             }
         }
-        
+
         stage('Install Dependencies') {
             steps {
                 withEnv(['CI=false']) {
@@ -26,15 +26,21 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build Application') {
             steps {
                 sh 'npm run build' 
             }
         }
-        
-        
-        
+
+        stage('SonarQube Analysis') {
+            steps {
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                    sh 'npx sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=carshowroom_frontend -Dsonar.projectName="Car Showroom Frontend" -Dsonar.sources=src'
+                }
+            }
+        }
+
         stage('Build and Push Docker Image') {
             environment {
                 DOCKER_IMAGE = "sujithsai/carshowroom:${env.BUILD_NUMBER}"
@@ -49,7 +55,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Update Deployment File') {
             environment {
                 GIT_REPO_NAME = "carshowroom_frontend"
@@ -69,7 +75,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
             // Clean up any workspace or resources
