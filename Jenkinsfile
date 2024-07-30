@@ -23,6 +23,8 @@ pipeline {
             steps {
                 withEnv(['CI=false']) {
                     sh 'npm install'
+                    sh 'npm install @babel/plugin-proposal-private-property-in-object --save-dev'
+
                 }
             }
         }
