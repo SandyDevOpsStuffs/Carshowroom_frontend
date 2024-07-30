@@ -8,7 +8,7 @@ pipeline {
     environment {
         FRONTEND_REPO = 'https://github.com/Sujithsai08/carshowroom_frontend.git'
         FRONTEND_BRANCH = 'main'
-        SONAR_URL = 'http://18.206.184.8:9000' // Replace this URL with your SonarQube server URL
+       
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
 
@@ -33,13 +33,7 @@ pipeline {
             }
         }
         
-        stage('SonarQube Analysis') {
-            steps {
-                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-                    sh 'npx sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=carshowroom_frontend -Dsonar.projectName="Car Showroom Frontend" -Dsonar.sources=src'
-                }
-            }
-        }
+        
         
         stage('Build and Push Docker Image') {
             environment {
