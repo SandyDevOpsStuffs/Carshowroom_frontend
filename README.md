@@ -3,7 +3,9 @@
 
 ## Overview
 
-This repository contains the Car Showroom front-end application. As part of my application for a DevOps position at tanX.fi, I am utilizing this project to demonstrate my skills in containerization, continuous integration/continuous deployment (CI/CD), and deployment on Kubernetes using Argo CD.
+This repository contains the Car Showroom front-end application. For my application for a DevOps position at tanX.fi, I am using this project to demonstrate my skills in containerization, continuous integration/continuous deployment (CI/CD), and deployment on Kubernetes using Argo CD.
+
+Since I am interested in a DevOps Engineer role and may not have expertise in building the specific application mentioned, I have utilized this sample application to effectively showcase my DevOps skills. I hope this approach is considered suitable.
 
 ## DevOps Skills Demonstration
 
@@ -45,11 +47,9 @@ The CI/CD pipeline defined in the `Jenkinsfile` includes the following stages:
 3. **Push**: Pushes the Docker image to Docker Hub.
 4. **Deploy**: Deploys the application to the Kubernetes cluster using Argo CD.
 
-## Deployment on Kubernetes
-For detailed steps on deploying the application using Argo CD, read my blog [here](https://sujith08.hashnode.dev/end-to-end-cicd-project-using-jenkins-and-argocd).
-
-## Additional Information
+## Deployment on Kubernetes and Additional Information
 For more details about the project and the CI/CD pipeline, please read my blog [here](https://sujith08.hashnode.dev/end-to-end-cicd-project-using-jenkins-and-argocd).
+
 
 
 
