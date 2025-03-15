@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: carshowroom-app
-        image: sujithsai/carshowroom:7
+        image: SandyDevOpsStuffs/carshowroom:7
         ports:
         - containerPort: 3001
